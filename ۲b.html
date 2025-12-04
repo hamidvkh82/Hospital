@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>بیمارستان</title>
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #212529;
+      --header-bg: #ffffff;
+      --sidebar-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --hover-color: #f0f0f0;
+      --primary-color: #0d6efd;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --header-bg: #1e1e1e;
+      --sidebar-bg: #252525;
+      --card-bg: #1e1e1e;
+      --border-color: #333;
+      --hover-color: #333333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      background-color: var(--header-bg);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--hover-color);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      opacity: 0.9;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 68px;
+      right: 0;
+      width: 200px;
+      background: var(--sidebar-bg);
+      height: calc(100vh - 68px);
+      padding: 1.2rem 1rem;
+      border-left: 1px solid var(--border-color);
+      z-index: 1000;
+    }
+
+    .dropdown {
+      margin-bottom: 1.2rem;
+    }
+
+    .dropbtn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      padding: 0.5rem 0.8rem;
+      width: 100%;
+      text-align: right;
+      cursor: pointer;
+      font-size: 0.95rem;
+      border-radius: 4px;
+    }
+
+    .dropbtn:hover {
+      background: var(--hover-color);
+    }
+
+    .dropdown-content {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-top: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.6rem 1rem;
+      color: var(--text-color);
+      text-decoration: none;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .dropdown-content a:hover {
+      background: var(--hover-color);
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .main-content {
+      margin-right: 220px;
+      padding: 2rem;
+      min-height: calc(100vh - 68px);
+    }
+
+    /* Slider */
+    .slider-container {
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      animation: slide 15s infinite;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    @keyframes slide {
+      0%, 30% { transform: translateX(0); }
+      35%, 65% { transform: translateX(-33.33%); }
+      70%, 100% { transform: translateX(-66.66%); }
+    }
+
+    /* Dashboard */
+    .dashboard {
+      background: var(--card-bg);
+      padding: 1.8rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .dashboard h2 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .shortcut {
+      display: inline-block;
+      background: var(--primary-color);
+      color: white;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-left: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .main-content {
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">بیمارستان</div>
+    <div class="top-actions">
+      <!-- Language toggle: simple globe icon -->
+      <button class="icon-btn" id="langToggle" title="تغییر زبان / Switch Language">🌐</button>
+      <!-- Theme toggle: moon/sun icon -->
+      <button class="icon-btn" id="themeToggle" title="حالت شب/روز">🌙</button>
+      <!-- User & Logout (kept as simple icons or minimal text) -->
+      <button class="icon-btn" title="صفحه کاربر">👤</button>
+      <button class="icon-btn" title="خروج">🚪</button>
+    </div>
+  </header>
+
+  <div class="sidebar">
+    <div class="dropdown">
+      <button class="dropbtn">مدیریت ▼</button>
+      <div class="dropdown-content">
+        <a href="#">آموزش مدیریت کاربران</a>
+        <a href="#">LMS</a>
+        <a href="#">ارتباط با کارشناس</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="slider-container">
+      <div class="slider">
+        <div class="slide"><img src="https://placehold.co/800x280?text=بیمارستان+امام+خمینی" alt=""></div>
+        <div class="slide"><img src="https://placehold.co/800x280?text=بیمارستان+شریعتی" alt=""></div>
+        <div class="slide"><img src="https://placehold.co/800x280?text=بیمارستان+مسیح+دانشوری" alt=""></div>
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <h2>کارتابل من</h2>
+      <p>در این بخش می‌توانید کارهای خود را مدیریت کنید.</p>
+      <a href="#" class="shortcut">شروع کار</a>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle (icon only, no text)
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlRoot = document.getElementById('html-root');
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+      htmlRoot.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = htmlRoot.hasAttribute('data-theme');
+      if (isDark) {
+        htmlRoot.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlRoot.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Language toggle (icon only, no text — just switches dir & lang)
+    const langToggle = document.getElementById('langToggle');
+    let isEn = false;
+
+    langToggle.addEventListener('click', () => {
+      isEn = !isEn;
+      const root = document.documentElement;
+      if (isEn) {
+        root.setAttribute('lang', 'en');
+        root.setAttribute('dir', 'ltr');
+        document.querySelector('.logo').textContent = 'Hospital';
+        document.querySelector('.dashboard h2').textContent = 'My Dashboard';
+        document.querySelector('.dashboard p').textContent = 'Manage your tasks here.';
+        document.querySelector('.shortcut').textContent = 'Start Work';
+        // Optional: Translate sidebar if needed (not shown for minimalism)
+      } else {
+        root.setAttribute('lang', 'fa');
+        root.setAttribute('dir', 'rtl');
+        document.querySelector('.logo').textContent = 'بیمارستان';
+        document.querySelector('.dashboard h2').textContent = 'کارتابل من';
+        document.querySelector('.dashboard p').textContent = 'در این بخش می‌توانید کارهای خود را مدیریت کنید.';
+        document.querySelector('.shortcut').textContent = 'شروع کار';
+      }
+    });
+  </script>
+</body>
+</html>
